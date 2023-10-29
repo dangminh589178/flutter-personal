@@ -6,18 +6,26 @@ import 'package:myapp_flutter/Transaction.dart';
 import 'TransactionList.dart';
 
 //You can define your own Widget
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: _MyAppState()
+    );
   }
 }
 
-void _showActionDilog(){}
-
+void _showActionDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+            title: Text("Insert your transaction "),
+        content: Text("Please insert your data"),
+          ));
+}
 
 //This is a "very basic" statefulwidget
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+class _MyAppState extends StatelessWidget {
 
   final _scaffoldKey = new GlobalKey<ScaffoldMessengerState>();
   final _contentController = TextEditingController();
@@ -34,18 +42,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     Transaction(content: "Iphone", amount: 2.3),
     Transaction(content: "Mouse", amount: 2.3),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-  }
 
   void _insertTransaction() {
     if (_transaction.content == '' ||
@@ -70,6 +66,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               actions: [
                 IconButton(
                     onPressed: () {
+                      _showActionDialog(context);
                       // showDialog(
                       //     context: context,
                       //     builder: (BuildContext context ){
@@ -92,27 +89,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                       decoration: InputDecoration(labelText: 'Content'),
                       controller: _contentController,
                       onChanged: (text) {
-                        setState(() {
-                          _transaction.content = text;
-                          _content = text;
-                        });
+                        // setState(() {
+                        //   _transaction.content = text;
+                        //   _content = text;
+                        // });
                       },
                     ),
                     TextField(
                       decoration: InputDecoration(labelText: 'Amount(money)'),
                       controller: _amountController,
                       onChanged: (text) {
-                        setState(() {
-                          _transaction.amount =
-                              double.tryParse(text) ?? 0; //if error, value = 0
-                        });
+                        // setState(() {
+                        //   _transaction.amount =
+                        //       double.tryParse(text) ?? 0; //if error, value = 0
+                        // });
                       },
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            this._insertTransaction();
-                          });
+                          // setState(() {
+                          //   this._insertTransaction();
+                          // });
                           _scaffoldKey.currentState?.showSnackBar(SnackBar(
                               content: Text(
                                   'List transaction: ${_transactions.toString()}')));
