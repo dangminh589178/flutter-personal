@@ -1,66 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:myapp_flutter/categories_page.dart';
+import 'package:myapp_flutter/food_page.dart';
+
+import 'models/categories.dart';
 
 void main() {
-  runApp(MyCustomButttonRealTime());
+  runApp(Myapp());
 }
 
-class MyCustomButttonRealTime extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return LaunchScreent();
-  }
-}
-
-class LaunchScreent extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return MyScreen();
-  }
-}
-
-class MyScreen extends State<LaunchScreent> {
-  bool stateTextClick = true;
-
-  Widget FirstWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [Text("First String")],
-    );
-  }
-
-  Widget SecondWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "Second String",
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: 15),
-        ),
-      ],
-    );
-  }
-
+class Myapp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: '/',
+      routes:{
+        '/FoodPageDetail': (context) => FoodPage(category: Category(id: 1, content: "Pizza", color: Colors.green)),
+        '/CategoriesPage': (context) => CategoriesPage()
+      },
+      title: "Food app with navigation",
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
       home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (stateTextClick) FirstWidget() else SecondWidget(),
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      stateTextClick = !stateTextClick;
-                    });
-                  },
-                  child: Text("Click me"))
-            ],
-          ),
+        appBar: AppBar(
+          title: Text('Food\'s categories'),
         ),
+        body: CategoriesPage(),
       ),
     );
   }
